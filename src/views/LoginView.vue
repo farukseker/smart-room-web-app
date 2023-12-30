@@ -32,7 +32,7 @@ function send_otp() {
 </script>
 
 <template>
-<section class="d-flex" style="background:url('https://images.unsplash.com/photo-1542396601-dca920ea2807?q=80&w=1951&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')  no-repeat center; object-fit: cover; height: 100vh">
+<section class="d-flex" style="background:url('https://res.cloudinary.com/dlusw5ukg/image/upload/v1703897850/my_smart_room/hannah-montez-2VslRz5G8fo-unsplash_drtt8m.jpg')  no-repeat center; object-fit: cover; height: 100vh">
   <article class="justify-content-center  m-auto col-12 col-sm-10 col-md-4 col-lg-3" style="background: transparent!important;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);">
     <form @submit.prevent="send_login" v-if="!otp_form" class="border rounded p-3 shadow" style="border-color: rgba(255,255,255,0.53)!important;background: transparent!important;">
       <div class="mb-3">

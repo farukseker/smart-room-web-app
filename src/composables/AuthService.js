@@ -64,7 +64,9 @@ class AuthService {
     }
 
     getAccessToken() {
-        return cookies.cookies.get('remember_me') ? cookies.cookies.get('access') : sessionStorage.getItem('access')
+        const token = cookies.cookies.get('remember_me') ? cookies.cookies.get('access') : sessionStorage.getItem('access')
+        console.log('a token' + token)
+        return token
     }
 
     setAccessToken(token) {
@@ -72,12 +74,19 @@ class AuthService {
 
     }
 
+    getRefreshToken() {
+        const token = cookies.cookies.get('remember_me') ? cookies.cookies.get('refresh') : sessionStorage.getItem('refresh')
+
+        console.log('r token' + token)
+        return token
+    }
+
     removeAccessToken() {
         sessionStorage.removeItem('access');
     }
 
     refreshToken() {
-        const refreshToken = sessionStorage.getItem('refresh');
+        const refreshToken = this.getRefreshToken();
         if (!refreshToken) {
             return Promise.reject('No refresh token available');
         }
