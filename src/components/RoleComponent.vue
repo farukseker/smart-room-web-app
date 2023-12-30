@@ -72,7 +72,6 @@ async function connect_to_ws(){
 <section class="card border mt-3" style="backdrop-filter: blur(3px); background-color: rgba(var(--bs-light-rgb),.5);" v-for="esp in esp_list" v-bind:key="esp.esp_id">
   <article class="card-header shadow-sm d-flex fw-bold text-light position-relative">
     <div style="min-width: max-content"><i class="fa-solid fa-person-shelter me-1"></i> {{ esp.name }} </div>
-    <div class="w-100 text-center position-absolute ">ESP APP</div>
     <div class="w-100 text-center "></div>
     <div class="d-flex" style="min-width: max-content">
       <i class="fa-solid fa-window-minimize"></i>
@@ -80,7 +79,7 @@ async function connect_to_ws(){
       <i class="fa-regular fa-rectangle-xmark"></i>
     </div>
   </article>
-  <article class="card-body row">
+  <article class="card-body row m-0">
     <div class="d-inline-block col-6 col-md-3 col-lg-2 p-2" v-for="key in esp.keys" v-bind:key="key.id" @click="toggle_key(key.id, key.current)" >
       <div class="position-relative">
         <Transition>
@@ -100,9 +99,6 @@ async function connect_to_ws(){
     </span>
      {{ esp.name }}
    </div>
-    <div class="w-100 position-absolute text-center m-auto">
-      {{ esp.esp_id }}
-    </div>
     <div class="w-100 "></div>
     <div class="text-primary fw-semibold" style="min-width: max-content">
       <a class="link-primary" href="#">See Log</a>
