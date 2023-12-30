@@ -3,9 +3,9 @@ import {ref} from 'vue'
 import AuthService from "@/composables/AuthService";
 import { useRouter } from 'vue-router'
 
-
 const username = ref('')
 const password = ref('')
+const remember_me = ref(false)
 const otp_code = ref('')
 const otp_form = ref(false)
 const send_login_request = ref(false)
@@ -14,7 +14,7 @@ const router = useRouter()
 async function send_login() {
   send_login_request.value = true
   const login_data = await AuthService.login({
-    username:username.value, password:password.value
+    username:username.value, password:password.value,remember_me: remember_me
   })
   if  (login_data.has_otp){
     otp_form.value = true
@@ -42,6 +42,10 @@ function send_otp() {
       <div class="mb-3">
         <label for="password_input" class="form-label">Name<span class="text-dangertext-light fw-bold ms-1">*</span></label>
         <input v-model="password" type="password" class="form-control text-light fw-bold shadow" id="password_input" placeholder="password" required name="password" autocomplete="on" style="border-color: rgba(255,255,255,0.53)!important;background: transparent!important;">
+      </div>
+      <div>
+        <input v-model="remember_me" type="checkbox" id="remember_me">
+        <label class="fw-semibold ms-1 text-danger" for="remember_me">remember me! (15day)</label>
       </div>
       <hr>
       <button class="btn btn-primary w-100 shadow border" type="submit" style="border-color: rgba(255,255,255,0.53)!important;" :disabled="send_login_request">

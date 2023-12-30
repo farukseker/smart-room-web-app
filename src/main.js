@@ -6,7 +6,18 @@ import store from './store'
 import axios from "axios";
 import 'bootstrap/dist/css/bootstrap.min.css'
 import AuthService from "@/composables/AuthService";
+import { globalCookiesConfig } from "vue3-cookies";
 
+var date = new Date;
+date.setDate(date.getDate() + 15);
+
+globalCookiesConfig({
+    expireTimes: date,
+    path: "/",
+    domain: process.env.VUE_APP_DOMAIN,
+    secure: true,
+    sameSite: "None",
+});
 
 axios.defaults.baseURL = process.env.VUE_APP_API_PATH
 
@@ -43,4 +54,7 @@ axios.interceptors.response.use(
     }
 )
 
-createApp(App).use(store).use(router).mount('#app')
+createApp(App)
+    .use(store)
+    .use(router)
+    .mount('#app')
