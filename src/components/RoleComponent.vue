@@ -6,7 +6,7 @@ import {useRouter} from "vue-router";
 
 const ws = ref()
 const esp_list = ref([])
-
+const connect = ref(false)
 const router = useRouter()
 
 onMounted(async ()=>{
@@ -38,11 +38,14 @@ async function get_ws_accesses(){
   }
 }
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 async function connect_to_ws(){
   const token = await get_ws_accesses()
   if (token){
     ws.value = new WebSocket(process.env.VUE_APP_WS_PATH + token)
     ws.value.onopen = (ws)=>{
+      connect.value = true
       console.log('esp')
       console.log(ws)
     }
@@ -55,13 +58,18 @@ async function connect_to_ws(){
     ws.value.onerror = event => {
       console.log(event)
     }
+    ws.value.onclose =  async () =>{
+      connect.value = false
+      await sleep(1000)
+    }
   }
 }
 
 </script>
 
 <template>
-<section class="card border m-3" style="backdrop-filter: blur(3px); background-color: rgba(var(--bs-light-rgb),.5);" v-for="esp in esp_list" v-bind:key="esp.esp_id">
+<div v-if="connect">
+<section class="card border mt-3" style="backdrop-filter: blur(3px); background-color: rgba(var(--bs-light-rgb),.5);" v-for="esp in esp_list" v-bind:key="esp.esp_id">
   <article class="card-header shadow-sm d-flex fw-bold text-light position-relative">
     <div style="min-width: max-content"><i class="fa-solid fa-person-shelter me-1"></i> {{ esp.name }} </div>
     <div class="w-100 text-center position-absolute ">ESP APP</div>
@@ -101,6 +109,11 @@ async function connect_to_ws(){
     </div>
   </article>
 </section>
+</div>
+
+<div v-else class="spinner-grow text-light" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
 </template>
 
 <style scoped>

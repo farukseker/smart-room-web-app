@@ -33,7 +33,7 @@ class AuthService {
                 } else {
                     this.save_temporary_session(token)
                 }
-                return token
+                return {login:true, use_otp: token.use_otp}
             }
             return false
         }catch (e) {
@@ -64,9 +64,7 @@ class AuthService {
     }
 
     getAccessToken() {
-        const token = cookies.cookies.get('remember_me') ? cookies.cookies.get('access') : sessionStorage.getItem('access')
-        console.log('a token' + token)
-        return token
+        return cookies.cookies.get('remember_me') ? cookies.cookies.get('access') : sessionStorage.getItem('access')
     }
 
     setAccessToken(token) {
@@ -75,14 +73,7 @@ class AuthService {
     }
 
     getRefreshToken() {
-        const token = cookies.cookies.get('remember_me') ? cookies.cookies.get('refresh') : sessionStorage.getItem('refresh')
-
-        console.log('r token' + token)
-        return token
-    }
-
-    removeAccessToken() {
-        sessionStorage.removeItem('access');
+        return cookies.cookies.get('remember_me') ? cookies.cookies.get('refresh') : sessionStorage.getItem('refresh')
     }
 
     refreshToken() {
@@ -183,8 +174,15 @@ class AuthService {
         return response.status
     }
 
-    async otp_test(){
-        await axios.get('/auth/otp_test/')
+    async otp(code){
+        try {
+            const response = await axios.post('/auth/otp/', {
+                otp_code: code
+            })
+            return response.status
+        } catch (e) {
+            Promise.reject(e)
+        }
     }
 }
 
