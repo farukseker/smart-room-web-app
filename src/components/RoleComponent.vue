@@ -61,6 +61,7 @@ async function connect_to_ws(){
     ws.value.onclose =  async () =>{
       connect.value = false
       await sleep(1000)
+      this.connect_to_ws()
     }
   }
 }
@@ -80,7 +81,7 @@ async function connect_to_ws(){
     </div>
   </article>
   <article class="card-body row m-0">
-    <div class="d-inline-block col-6 col-md-3 col-lg-2 p-2" v-for="key in esp.keys" v-bind:key="key.id" @click="toggle_key(key.id, key.current)" >
+    <div class="d-inline-block col-6 col-md-3 col-lg-2 col-xl-1 p-2" v-for="key in esp.keys" v-bind:key="key.id" @click="toggle_key(key.id, key.current)" >
       <div class="position-relative">
         <Transition>
           <img v-if="key.current" src="@/assets/sun.png" alt="light" class="shadow-lg rounded-circle position-absolute ratio ratio-1x1" style="/*width: 150px;height: 150px;*/text-shadow:rgb(240 240 240 / 35%) 1px 1px">

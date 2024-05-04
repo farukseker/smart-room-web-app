@@ -86,7 +86,7 @@ class AuthService {
                 const newAccessToken = response.data.access;
                 this.setAccessToken(newAccessToken); // Update the access token
                 return newAccessToken;
-            });
+            }).catch((e)=>{Promise.reject(e)});
     }
 
     async email_confirmation_token_control(token, census_token) {

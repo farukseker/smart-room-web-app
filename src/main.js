@@ -31,24 +31,22 @@ axios.interceptors.request.use(
     });
 
 axios.interceptors.response.use(
-    (response) =>{
+    (response) => {
         return response
-    }, error => {
-        // console.error('Error in response:', error);
-        const originalRequest = error.config;
-        if (error.response.status === 401 && !originalRequest._retry) {
-            originalRequest._retry = true;
+    }, async error => {
+        if (error.response.status === 401 && !error.config.url.endsWith('/refresh/')) {
+            try {
+                const refresh = await AuthService.refreshToken()
+                error.config.headers['Authorization'] = `${carrier_switch} ${refresh}` ;
+                return axios(error.config);
+            } catch (e) {
+                AuthService.logout()
+                router.push({name:'login'})
+            }
 
-            return  AuthService.refreshToken()
-                .then((newAccessToken) => {
-                    originalRequest.headers['Authorization'] = `${carrier_switch} ${newAccessToken}` ;
-                    return axios(originalRequest);
-                })
-                .catch((refreshError) => {
-                    AuthService.logout()
-                    return Promise.reject(refreshError); // Reject the promise to propagate the error further
-
-                })
+        } else if (error.response.status === 401 && error.config.url.endsWith('/refresh/')) {
+            AuthService.logout()
+            router.push({name:'login'})
         }
         return Promise.reject(error);
     }
