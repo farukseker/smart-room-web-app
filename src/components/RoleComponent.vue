@@ -89,7 +89,7 @@ async function connect_to_ws(){
         </Transition>
       </div>
       <div class="ratio ratio-1x1" style="/*height: 150px;width: 150px*/"></div>
-      <div class="text-center fw-bold m-auto h3 text-light mt-2" style="text-shadow:rgb(240 240 240 / 35%) 1px 1px">
+      <div class="text-center fw-bold m-auto h6 text-light mt-2" style="text-shadow:rgb(240 240 240 / 35%) 1px 1px">
         {{ key.name }}</div>
     </div>
   </article>
