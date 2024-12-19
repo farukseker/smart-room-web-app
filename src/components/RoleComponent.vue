@@ -61,7 +61,7 @@ async function connect_to_ws(){
     ws.value.onclose =  async () =>{
       connect.value = false
       await sleep(1000)
-      this.connect_to_ws()
+      connect_to_ws()
     }
   }
 }
