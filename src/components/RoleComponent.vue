@@ -1,4 +1,5 @@
 <script setup>
+/* eslint-disable */ 
 import {onMounted, ref} from "vue";
 import axios from "axios";
 import {useRouter} from "vue-router";
@@ -46,8 +47,6 @@ async function connect_to_ws(){
     ws.value = new WebSocket(process.env.VUE_APP_WS_PATH + token)
     ws.value.onopen = (ws)=>{
       connect.value = true
-      console.log('esp')
-      console.log(ws)
     }
     ws.value.onmessage = (event)=>{
       const data = JSON.parse(event.data)
@@ -81,7 +80,7 @@ async function connect_to_ws(){
     </div>
   </article>
   <article class="card-body row m-0">
-    <div class="d-inline-block col-6 col-md-3 col-lg-2 col-xl-1 p-2" v-for="key in esp.keys" v-bind:key="key.id" @click="toggle_key(key.id, key.current)" >
+    <div class="d-inline-block col-6 col-md-3 col-lg-3 col-xl-2 p-2" v-for="key in esp.keys" v-bind:key="key.id" @click="toggle_key(key.id, key.current)" >
       <div class="position-relative">
         <Transition>
           <img v-if="key.current" src="@/assets/sun.png" alt="light" class="shadow-lg rounded-circle position-absolute ratio ratio-1x1" style="/*width: 150px;height: 150px;*/text-shadow:rgb(240 240 240 / 35%) 1px 1px">
@@ -95,11 +94,17 @@ async function connect_to_ws(){
   </article>
   <article class="card-footer position-relative d-flex">
    <div style="min-width: max-content">
-      <span :class="(esp.is_connected ? 'text-success':'text-danger') + ' ' + 'fw-bold'">
+    <span v-if="esp.last_updater_is_esp">
+      <i class="fa-solid fa-microchip"></i>
+    </span>
+    <span v-else>
+      <i class="fa-solid fa-user"></i>
+    </span>
+    <span class="mx-1" :class="(esp.is_connected ? 'text-success':'text-danger') + ' ' + 'fw-bold'">
        {{ esp.is_connected ?  'Connected' : 'Disconnected' }}
     </span>
-     {{ esp.name }}
-   </div>
+    {{ esp.name }}
+  </div>
     <div class="w-100 "></div>
     <div class="text-primary fw-semibold" style="min-width: max-content">
       <a class="link-primary" href="#">See Log</a>

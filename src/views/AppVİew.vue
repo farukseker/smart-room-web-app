@@ -15,9 +15,9 @@ function logout() {
 </script>
 
 <template>
-<section class="d-flex bg-dark app-bg" style="height: 100vh">
+<section class="d-flex bg-dark app-bg overflow-y-auto" style="height: 100vh">
   <article class="container rounded position-relative p-2 justify-content-center m-auto" >
-    <div class="d-flex px-3 py-2 rounded justify-content-between fw-bold text-dark shadow" style="backdrop-filter: blur(3px); background-color: rgba(var(--bs-light-rgb),.5);">
+    <div class="d-flex px-3 py-2 rounded justify-content-between fw-bold text-dark shadow sticky-top" style="backdrop-filter: blur(3px); background-color: rgba(var(--bs-light-rgb),.5);">
       <span>SMART ROOM</span>
       <span>WELCOME</span>
       <div @click="logout" CLASS="link-danger">LOGOUT</div>
