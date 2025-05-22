@@ -1,5 +1,9 @@
 # smarthome
 
+
+Panel Preview : 
+![preview image **panel**](.preview/panel.png)
+
 ## Project setup
 ```
 npm install
